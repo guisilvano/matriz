@@ -9,7 +9,7 @@ struct Linha
 {
 	float valor;								
 	struct Linha *prox;
-} *inicio;
+};
 
 struct Coluna 
 {
@@ -22,9 +22,10 @@ struct Coluna
  */
 void imprimeLinha (Linha *lin)
 {
-	
 	if (lin == NULL)
-		printf ("Vazio.");
+		printf ("\nVazio.");
+
+	printf("\n");
 
 	while (lin != NULL){
 		printf ("%.2f ", lin->valor);
@@ -37,12 +38,10 @@ void imprimeLinha (Linha *lin)
  */
 Linha* insereInicioLinha (Linha *lin, float n)
 {
-
 	struct Linha *novo = (struct Linha*) malloc(sizeof(struct Linha));
 	
 
 	if (novo == NULL){
-		
 		printf ("\nFALHA AO ALOCAR MEMORIA");
 		exit (0);
 	}
@@ -56,8 +55,9 @@ Linha* insereInicioLinha (Linha *lin, float n)
 
 int main (int argc, char *argv[])
 {
-
 	Linha *headL = NULL;					//head linha
+
+	imprimeLinha (headL);
 
 	headL = insereInicioLinha (headL, 12);
 	headL = insereInicioLinha (headL, 13);
