@@ -1,68 +1,80 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct Linha {
+/*
+ * TODO: Implementar a estrutura Coluna, que guarda uma estrutura Linha
+ */
+
+struct Linha 
+{
 	float valor;								
 	struct Linha *prox;
 };
 
-struct Coluna {
+struct Coluna 
+{
 	struct Linha;
 	struct Coluna *prox;
 };
 
-
-Linha *imprimeLinha(Linha *lin){
-
+/*
+ * Imprime a linha atual
+ */
+Linha *imprimeLinha (Linha *lin)
+{
+	
+	printf ("\nimprimeLinha: ");
 
 	if (lin == NULL)
-		return NULL;
+		printf ("Vazio.");
 
 	Linha *l = lin;
+	l = lin;
 
-	while(l->prox != NULL){
-		printf("%f", l->valor);
+	while (l != NULL){
+		printf ("%.2f ", l->valor);
 		l = l->prox;
 	}
 
 	return l;
-
 }
 
-void insereInicio(Linha *lin){
+/*
+ * Insere um valor no inicio da linha
+ */
+Linha* insereInicioLinha (Linha *lin, float n)
+{
 
-	Linha *primeiro = lin;
+	printf ("insereInicio: ");
 	
-	for (int i=0; i<10; i++){
-
-		struct Linha *novo = (struct Linha*) malloc(sizeof(struct Linha));
+	struct Linha *novo = (struct Linha*) malloc(sizeof(struct Linha));
 	
-		if(novo == NULL){
-			printf ("\nFALHA AO ALOCAR MEMORIA");
-			exit(0);
-		}
-
-		novo->valor = i;
-		novo->prox = primeiro;
-
-		//printf("%f ", novo->valor);
-
-		primeiro = novo;
-		primeiro->prox = NULL;
+	if (novo == NULL){
+		printf ("\nFALHA AO ALOCAR MEMORIA");
+		exit(0);
 	}
+
+	novo->valor = n;
+	novo->prox = NULL;
 	
+	printf ("%.2f ", novo->valor);
+
+	return novo;
 }
 
 
-int main (int argc, char *argv[]){
+int main (int argc, char *argv[])
+{
 
+	Linha *headL = NULL;					//head linha
+	Linha *inicioL = headL;					//inicio linha
 
-	Linha *head = NULL; //aponta para o inicio da linha
+	headL = insereInicioLinha (headL, 12);
+	headL = insereInicioLinha (headL, 13);
+	
+	imprimeLinha (inicioL);
+	
+	printf ("\nMain: %.2f", headL->valor);
 
-	insereInicio(head);
-
-
-	imprimeLinha(head);
-
-	printf(" 1");
+	return 0;
 }
