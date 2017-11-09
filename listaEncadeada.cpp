@@ -23,8 +23,6 @@ struct Coluna
 void imprimeLinha (Linha *lin)
 {
 	
-	printf ("\nimprimeLinha: ");
-
 	if (lin == NULL)
 		printf ("Vazio.");
 
@@ -40,8 +38,6 @@ void imprimeLinha (Linha *lin)
 Linha* insereInicioLinha (Linha *lin, float n)
 {
 
-	printf ("insereInicio: ");
-	
 	struct Linha *novo = (struct Linha*) malloc(sizeof(struct Linha));
 	
 
@@ -54,8 +50,6 @@ Linha* insereInicioLinha (Linha *lin, float n)
 	novo->valor = n;
 	novo->prox = lin;
 	
-	printf ("%.2f ", novo->valor);
-    
 	return novo;
 }
 
