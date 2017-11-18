@@ -1,68 +1,114 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-/*
- * TODO: Implementar a estrutura Coluna, que guarda uma estrutura Linha
- */
-
-struct Linha 
+struct Linha
 {
-	float valor;								
+	float valor;							
 	struct Linha *prox;
 };
 
-struct Coluna 
+struct Coluna
 {
 	struct Linha;
 	struct Coluna *prox;
 };
 
-/*
- * Imprime a linha atual
- */
-void imprimeLinha (Linha *lin)
+struct Coluna  *alocaColuna() 
 {
-	if (lin == NULL)
-		printf ("\nVazio.");
-
-	printf("\n");
-
-	while (lin != NULL){
-		printf ("%.2f ", lin->valor);
-		lin = lin->prox;
-	}
+	return (Coluna *) malloc(sizeof(struct Coluna));
 }
 
-/*
- * Insere um valor no inicio da linha
- */
-Linha* insereInicioLinha (Linha *lin, float n)
+struct Linha  *alocaLinha()
 {
-	struct Linha *novo = (struct Linha*) malloc(sizeof(struct Linha));
-	
-
-	if (novo == NULL){
-		printf ("\nFALHA AO ALOCAR MEMORIA");
-		exit (0);
-	}
-
-	novo->valor = n;
-	novo->prox = lin;
-	
-	return novo;
+	return (Linha *) malloc(sizeof(struct Linha));
 }
 
-
-int main (int argc, char *argv[])
+void liberaMemoriaColuna(Coluna *Col)
 {
-	Linha *headL = NULL;					//head linha
+	Coluna *Aux,*Ant;
+ 	if (Col != NULL)
+   	{ 
+		Aux = Col;
+	 	while (Aux != NULL)
+	 	{ 
+			Ant = Aux;
+	   		Aux = Aux->prox;
+	   		free(Ant);
+	 	}
+   }
+}
 
-	imprimeLinha (headL);
+void liberaMemoriaLinha(struct Linha *lin)
+{
+	Linha *aux,*ant;
+ 	if(lin != NULL)
+   	{ 
+		aux = lin;
+	 	while (aux->prox != NULL)
+	 	{
+			ant = aux;
+	   		aux = aux->prox;
+	   		free(ant);
+	 	}
+   }
+}
 
-	headL = insereInicioLinha (headL, 12);
-	headL = insereInicioLinha (headL, 13);
+float ConverteCelsiusParaFahremheit(float celsius)
+{
+	return (9*celsius+160)/5;
+}
+
+void Inserir( struct Linha *cabeca )
+{
+	struct Linha *aux, *novo;
 	
-	imprimeLinha (headL);
+	aux = cabeca;
+	
+	while ( aux->prox != NULL ) 
+	{
+		aux = aux->prox;
+	}
+	
+	novo = alocaLinha ();
+	
+	printf ("Digite a temperatura: ");
+	scanf("%f", &novo->valor);
+	novo->prox = NULL;
+	
+	aux->prox = novo;
+}
 
+void Listar(struct Linha *Cabecalho)
+{ 
+	float grausFahrenheit = 0;
+	Linha *aux;
+  	aux = Cabecalho;
+  	while (aux != NULL)
+    {
+    	grausFahrenheit = ConverteCelsiusParaFahremheit(aux->valor);
+    	printf("-- %d - %f - %d | \n", aux, grausFahrenheit, aux->prox); //getche();
+       	aux = aux->prox;
+    } 
+  	printf("\n");
+}
+
+int main() {
+
+	int i = 0;
+	struct Linha lin;
+	lin.prox = NULL;
+
+	do {
+		printf("\n 1 - Inserir");
+		printf("\n 2 - Listar");
+		printf("\n 3 - FIM");
+		printf("\n--> ");
+		scanf("%d", &i);
+		if (i == 1) Inserir(&lin); 
+		if (i == 2) Listar(&lin);
+		if (i == 3) break;
+	}while(i);
+
+	liberaMemoriaLinha(&lin);
 	return 0;
 }
