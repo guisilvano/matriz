@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
-
+#include<iostream>
+#include<fstream>
 
 struct Linha 
 {
@@ -106,8 +107,10 @@ Coluna* novaLinha (Coluna *col, Linha *lin)
 }
 
 
-void imprimeMatriz (Coluna *col)
+Coluna *imprimeCelcius (Coluna *col)
 {
+	Coluna *tmp = col;
+
 	while (col != NULL){
 		while (col->linha != NULL){
 			printf("%.2f ", col->linha->valor);
@@ -119,20 +122,24 @@ void imprimeMatriz (Coluna *col)
 		col = col->prox;
 	}
 
+	return tmp;
 }
 
 
 void converteFahrenheit (Coluna *col)
 {
+	Coluna *tmp = col;
+	
 	while (col != NULL){
 		while (col->linha != NULL){
-			printf("%.2f ", (col->linha->valor*1.8+32));
+			printf("%.2f\t", (col->linha->valor*1.8+32));
 			col->linha = col->linha->prox;
 		}
 
 		printf("\n");
 		col = col->prox;
 	}
+
 }
 
 
@@ -141,36 +148,54 @@ int main (int argc, char *argv[])
 	Linha *headL = NULL;					//head linha
 	Coluna *headC = NULL;					//head coluna
 	
-	headL = insereLinha (headL, 11);
-	headL = insereLinha (headL, 12);
-	headL = insereLinha (headL, 13);
-	
-	headC = novaLinha (headC, headL);
-	headL = NULL;
+	int opt;
 
-	headL = insereLinha (headL, 21);
-	headL = insereLinha (headL, 22);
-	headL = insereLinha (headL, 23);
+	printf("CONVERSOR CELCIUS -> FAHRENHEIT"
+		"\n 1) Inserir temperatura na linha"
+		"\n 2) Terminar linha atual/nova linha em branco"
+		"\n 3) Converter para graus fahrenheit"
+		"\n 0) Ajuda\n");
 
-	headC = novaLinha (headC, headL);
-	headL = NULL;
+	while (true){
+		printf("\n>>");
+		scanf("%d", &opt);
+		
+		switch (opt){
+			case 1:	
+				float n;
+			
+				printf("Informe o valor: ");
+				scanf("%f", &n);
 
-	headL = insereLinha (headL, 31);
-	headL = insereLinha (headL, 32);
-	headL = insereLinha (headL, 33);
+				headL = insereLinha (headL, n);
 
-	headC = novaLinha (headC, headL);
-	headL = NULL;
+				break;
+			
+			case 2:
+				headC = novaLinha (headC, headL);
+				headL = NULL;
+				
+				printf("Linha finalizada!\n");
 
-	headL = insereLinha (headL, 41);
-	headL = insereLinha (headL, 42);
-	headL = insereLinha (headL, 43);
+				break;
+			
+			case 3:
+				printf("\nTemperaturas (°F): \n");
+				converteFahrenheit (headC);
+			
+			case 0:
+				printf("Inserir as temperaturas em °C utilizando a opção 1, "
+				"assim que todos os valores de uma linha forem inseridos "
+				"utilizar a opção 2 para criá-la e iniciar uma nova linha com "
+				"novos valores."
+				"\nUtilizar a opção 3 para finalizar o programa e converter as unidades."
+				"\nPressione qualquer outra tecla para terminar o programa.\n");
 
-	headC = novaLinha (headC, headL);
-	headL = NULL;
+				break;
 
-	imprimeMatriz(headC);
-	//converteFahrenheit (headC);
-	
+			default: return 0;
+		}
+	}
+
 	return 0;
 }
