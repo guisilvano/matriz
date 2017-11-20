@@ -179,10 +179,6 @@ int main (int argc, char *argv[])
 
 				break;
 			
-			case 3:
-				printf("\nTemperaturas (°F): \n");
-				converteFahrenheit (headC);
-			
 			case 0:
 				printf("Inserir as temperaturas em °C utilizando a opção 1, "
 				"assim que todos os valores de uma linha forem inseridos "
@@ -193,6 +189,10 @@ int main (int argc, char *argv[])
 
 				break;
 
+			case 3:
+				printf("\nTemperaturas (°F): \n");
+				converteFahrenheit (headC);
+			
 			default: return 0;
 		}
 	}
