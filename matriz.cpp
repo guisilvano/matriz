@@ -53,8 +53,7 @@ Linha *buscaUltimo(Linha *lin)
  */
 Linha* insereLinha (Linha *lin, float n)
 {
-	struct Linha *novo = (struct Linha*) malloc(sizeof(struct Linha));
-	
+	Linha *novo = new Linha();
 
 	if (novo == NULL){
 		printf ("\nFALHA AO ALOCAR MEMORIA");
@@ -80,8 +79,7 @@ Linha* insereLinha (Linha *lin, float n)
 
 Coluna* novaLinha (Coluna *col, Linha *lin)
 {
-	struct Coluna *novo = (struct Coluna*) malloc(sizeof(struct Coluna));
-	
+	Coluna *novo = new Coluna();
 
 	if (novo == NULL){
 		printf ("\nFALHA AO ALOCAR MEMORIA");
@@ -98,7 +96,7 @@ Coluna* novaLinha (Coluna *col, Linha *lin)
         
 		Coluna *ult = col;
 		while (ult->prox != NULL){
-			col = col->prox;
+			ult = ult->prox;
 		}
 
     	ult->prox = novo;
@@ -114,6 +112,7 @@ void imprimeMatriz (Coluna *col)
 		while (col->linha != NULL){
 			printf("%.2f ", col->linha->valor);
 			col->linha = col->linha->prox;
+
 		}
 
 		printf("\n");
@@ -142,10 +141,10 @@ int main (int argc, char *argv[])
 	Linha *headL = NULL;					//head linha
 	Coluna *headC = NULL;					//head coluna
 	
-	headL = insereLinha (headL, 11.11);
-	headL = insereLinha (headL, 12.12);
-	headL = insereLinha (headL, 13.13);
-
+	headL = insereLinha (headL, 11);
+	headL = insereLinha (headL, 12);
+	headL = insereLinha (headL, 13);
+	
 	headC = novaLinha (headC, headL);
 	headL = NULL;
 
@@ -156,7 +155,22 @@ int main (int argc, char *argv[])
 	headC = novaLinha (headC, headL);
 	headL = NULL;
 
-	converteFahrenheit (headC);
+	headL = insereLinha (headL, 31);
+	headL = insereLinha (headL, 32);
+	headL = insereLinha (headL, 33);
+
+	headC = novaLinha (headC, headL);
+	headL = NULL;
+
+	headL = insereLinha (headL, 41);
+	headL = insereLinha (headL, 42);
+	headL = insereLinha (headL, 43);
+
+	headC = novaLinha (headC, headL);
+	headL = NULL;
+
+	imprimeMatriz(headC);
+	//converteFahrenheit (headC);
 	
 	return 0;
 }
