@@ -21,12 +21,12 @@ struct Coluna
  * Imprime a linha atual
  */
 void imprimeLinha (Linha *lin)
-{
+{	//Ve se está vazia
 	if (lin == NULL)
 		printf ("\nVazio.");
 
 	printf("\n");
-
+	//Incrementa o valor
 	while (lin != NULL){
 		printf ("%.2f ", lin->valor);
 		lin = lin->prox;
@@ -34,13 +34,17 @@ void imprimeLinha (Linha *lin)
 }
 
 
+/*
+ *Busca o ultimo elemento da lista
+ */
 Linha *buscaUltimo(Linha *lin)
-{
+{	
+	
 	if(lin == NULL){
 		return NULL;
   	}
   	
-	//busca o Ãºltimo elemento inserido na linha
+	//se lin->prox for diferente de nulo lin recebe lin-prox
 	while(lin->prox != NULL){
    		lin = lin->prox;
   	}
@@ -50,27 +54,27 @@ Linha *buscaUltimo(Linha *lin)
 
 
 /*
- * Insere um valor no inicio da linha
+ * Insere um valor no final da linha
  */
 Linha* insereLinha (Linha *lin, float n)
 {
 	Linha *novo = new Linha();
-
+	// verifica se houve falha na alocação de memória
 	if (novo == NULL){
 		printf ("\nFALHA AO ALOCAR MEMORIA");
 		exit (0);
 	}
-
+	//insere valor
 	novo->valor = n;
 	novo->prox = NULL;
-	
+	//cria nova linha
    	if(lin == NULL){
         lin = novo;
 
    	} else {
-        
+        //busca o ultimo
 		Linha *ult = buscaUltimo (lin);
-
+		//ultimo recebe novo
     	ult->prox = novo;
    	}
 
@@ -79,14 +83,15 @@ Linha* insereLinha (Linha *lin, float n)
 
 
 Coluna* novaLinha (Coluna *col, Linha *lin)
-{
+{	
 	Coluna *novo = new Coluna();
-
+	
+	// verifica se houve falha na alocação de memória
 	if (novo == NULL){
 		printf ("\nFALHA AO ALOCAR MEMORIA");
 		exit (0);
 	}
-
+	// atribui os valores
 	novo->linha = lin;
 	novo->prox = NULL;
 	
@@ -94,8 +99,9 @@ Coluna* novaLinha (Coluna *col, Linha *lin)
         col = novo;
 
    	} else {
-        
+        // ult recebe o endereço da anterior
 		Coluna *ult = col;
+		
 		while (ult->prox != NULL){
 			ult = ult->prox;
 		}
@@ -103,43 +109,52 @@ Coluna* novaLinha (Coluna *col, Linha *lin)
     	ult->prox = novo;
    	}
 
+	lin = NULL;
+
 	return col;
 }
 
 
-Coluna *imprimeCelcius (Coluna *col)
+void imprimeCelcius (Coluna *col)
 {
-	Coluna *tmp = col;
-
+	Linha  *primeiraLinha = col->linha;
+	Coluna *primeiraColuna = col;
+	
+	//enquanto coluna for diferente de nulo entra no while
 	while (col != NULL){
 		while (col->linha != NULL){
-			printf("%.2f ", col->linha->valor);
+			printf("%.2f\t", col->linha->valor);
 			col->linha = col->linha->prox;
 
 		}
-
+		//Pula para o proximo valor
 		printf("\n");
 		col = col->prox;
 	}
 
-	return tmp;
+	col = primeiraColuna;
+	col->linha = primeiraLinha;
 }
 
 
 void converteFahrenheit (Coluna *col)
 {
-	Coluna *tmp = col;
+	Linha  *primeiraLinha = col->linha;
+	Coluna *primeiraColuna = col;
 	
+	// enquanto coluna for diferente de nulo entra no while e calcula a variavel passando para fahrenheit
 	while (col != NULL){
 		while (col->linha != NULL){
 			printf("%.2f\t", (col->linha->valor*1.8+32));
 			col->linha = col->linha->prox;
 		}
-
+		//Pula para o proximo valor
 		printf("\n");
 		col = col->prox;
 	}
 
+	col = primeiraColuna;
+	col->linha = primeiraLinha;
 }
 
 
@@ -173,26 +188,28 @@ int main (int argc, char *argv[])
 			
 			case 2:
 				headC = novaLinha (headC, headL);
-				headL = NULL;
 				
 				printf("Linha finalizada!\n");
 
 				break;
 			
 			case 0:
-				printf("Inserir as temperaturas em Â°C utilizando a opÃ§Ã£o 1, "
+				printf("Inserir as temperaturas em °C utilizando a opção 1, "
 				"assim que todos os valores de uma linha forem inseridos "
-				"utilizar a opÃ§Ã£o 2 para criÃ¡-la e iniciar uma nova linha com "
+				"utilizar a opção 2 para criá-la e iniciar uma nova linha com "
 				"novos valores."
-				"\nUtilizar a opÃ§Ã£o 3 para finalizar o programa e converter as unidades."
+				"\nUtilizar a opção 3 para finalizar o programa e converter as unidades."
 				"\nPressione qualquer outra tecla para terminar o programa.\n");
 
 				break;
 
 			case 3:
-				printf("\nTemperaturas (Â°F): \n");
+				printf("\nTemperaturas (°F): \n");
+				imprimeCelcius (headC);
+				printf("\n");
 				converteFahrenheit (headC);
-			
+
+
 			default: return 0;
 		}
 	}
