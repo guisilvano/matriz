@@ -1,7 +1,5 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<iostream>
-#include<fstream>
 
 struct Linha 
 {
@@ -15,23 +13,6 @@ struct Coluna
 	struct Linha *linha;
 	struct Coluna *prox;
 };
-
-
-/*
- * Imprime a linha atual
- */
-void imprimeLinha (Linha *lin)
-{	//Ve se está vazia
-	if (lin == NULL)
-		printf ("\nVazio.");
-
-	printf("\n");
-	//Incrementa o valor
-	while (lin != NULL){
-		printf ("%.2f ", lin->valor);
-		lin = lin->prox;
-	}
-}
 
 
 /*
@@ -72,16 +53,16 @@ Linha* insereLinha (Linha *lin, float n)
         lin = novo;
 
    	} else {
-        //busca o ultimo
 		Linha *ult = buscaUltimo (lin);
-		//ultimo recebe novo
     	ult->prox = novo;
    	}
 
 	return lin;
 }
 
-
+/*
+ * Finaliza a linha e aloca na estrutura Coluna
+ */
 Coluna* novaLinha (Coluna *col, Linha *lin)
 {	
 	Coluna *novo = new Coluna();
@@ -99,7 +80,6 @@ Coluna* novaLinha (Coluna *col, Linha *lin)
         col = novo;
 
    	} else {
-        // ult recebe o endereço da anterior
 		Coluna *ult = col;
 		
 		while (ult->prox != NULL){
@@ -114,20 +94,20 @@ Coluna* novaLinha (Coluna *col, Linha *lin)
 	return col;
 }
 
-
+/*
+ * Imprime os valores em graus celcius
+ */
 void imprimeCelcius (Coluna *col)
 {
 	Linha  *primeiraLinha = col->linha;
 	Coluna *primeiraColuna = col;
 	
-	//enquanto coluna for diferente de nulo entra no while
 	while (col != NULL){
 		while (col->linha != NULL){
 			printf("%.2f\t", col->linha->valor);
 			col->linha = col->linha->prox;
 
 		}
-		//Pula para o proximo valor
 		printf("\n");
 		col = col->prox;
 	}
@@ -136,19 +116,19 @@ void imprimeCelcius (Coluna *col)
 	col->linha = primeiraLinha;
 }
 
-
+/*
+ * Converte e imprime os valores em graus fahrenheit
+ */
 void converteFahrenheit (Coluna *col)
 {
 	Linha  *primeiraLinha = col->linha;
 	Coluna *primeiraColuna = col;
 	
-	// enquanto coluna for diferente de nulo entra no while e calcula a variavel passando para fahrenheit
 	while (col != NULL){
 		while (col->linha != NULL){
 			printf("%.2f\t", (col->linha->valor*1.8+32));
 			col->linha = col->linha->prox;
 		}
-		//Pula para o proximo valor
 		printf("\n");
 		col = col->prox;
 	}
@@ -208,7 +188,8 @@ int main (int argc, char *argv[])
 				imprimeCelcius (headC);
 				printf("\n");
 				converteFahrenheit (headC);
-
+				
+				system("pause");
 
 			default: return 0;
 		}
