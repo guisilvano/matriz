@@ -1,7 +1,5 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<iostream>
-#include<fstream>
 
 struct Linha 
 {
@@ -140,17 +138,17 @@ int main (int argc, char *argv[])
 				break;
 			
 			case 0:
-				printf("Inserir as temperaturas em °C utilizando a opção 1, "
+				printf("Inserir as temperaturas em Â°C utilizando a opÃ§Ã£o 1, "
 				"assim que todos os valores de uma linha forem inseridos "
-				"utilizar a opção 2 para criá-la e iniciar uma nova linha com "
+				"utilizar a opÃ§Ã£o 2 para criÃ¡-la e iniciar uma nova linha com "
 				"novos valores."
-				"\nUtilizar a opção 3 para finalizar o programa e converter as unidades."
+				"\nUtilizar a opÃ§Ã£o 3 para finalizar o programa e converter as unidades."
 				"\nPressione qualquer outra tecla para terminar o programa.\n");
 			
 				break;
 
 			case 3:
-				printf("\nTemperaturas (°F): \n");
+				printf("\nTemperaturas (Â°F): \n");
 				converteFahrenheit (headC);
 				system ("pause");
 			default: return 0;
