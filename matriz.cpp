@@ -15,17 +15,12 @@ struct Coluna
 };
 
 
-/*
- *Busca o ultimo elemento da lista
- */
 Linha *buscaUltimo(Linha *lin)
-{	
-	
+{
 	if(lin == NULL){
 		return NULL;
   	}
   	
-	//se lin->prox for diferente de nulo lin recebe lin-prox
 	while(lin->prox != NULL){
    		lin = lin->prox;
   	}
@@ -34,45 +29,41 @@ Linha *buscaUltimo(Linha *lin)
 }
 
 
-/*
- * Insere um valor no final da linha
- */
 Linha* insereLinha (Linha *lin, float n)
 {
 	Linha *novo = new Linha();
-	// verifica se houve falha na alocação de memória
+
 	if (novo == NULL){
 		printf ("\nFALHA AO ALOCAR MEMORIA");
 		exit (0);
 	}
-	//insere valor
+
 	novo->valor = n;
 	novo->prox = NULL;
-	//cria nova linha
+	
    	if(lin == NULL){
         lin = novo;
 
    	} else {
+        
 		Linha *ult = buscaUltimo (lin);
+
     	ult->prox = novo;
    	}
 
 	return lin;
 }
 
-/*
- * Finaliza a linha e aloca na estrutura Coluna
- */
+
 Coluna* novaLinha (Coluna *col, Linha *lin)
-{	
+{
 	Coluna *novo = new Coluna();
-	
-	// verifica se houve falha na alocação de memória
+
 	if (novo == NULL){
 		printf ("\nFALHA AO ALOCAR MEMORIA");
 		exit (0);
 	}
-	// atribui os valores
+
 	novo->linha = lin;
 	novo->prox = NULL;
 	
@@ -80,8 +71,8 @@ Coluna* novaLinha (Coluna *col, Linha *lin)
         col = novo;
 
    	} else {
+        
 		Coluna *ult = col;
-		
 		while (ult->prox != NULL){
 			ult = ult->prox;
 		}
@@ -89,52 +80,24 @@ Coluna* novaLinha (Coluna *col, Linha *lin)
     	ult->prox = novo;
    	}
 
-	lin = NULL;
-
 	return col;
 }
 
-/*
- * Imprime os valores em graus celcius
- */
-void imprimeCelcius (Coluna *col)
-{
-	Linha  *primeiraLinha = col->linha;
-	Coluna *primeiraColuna = col;
-	
-	while (col != NULL){
-		while (col->linha != NULL){
-			printf("%.2f\t", col->linha->valor);
-			col->linha = col->linha->prox;
 
-		}
-		printf("\n");
-		col = col->prox;
-	}
-
-	col = primeiraColuna;
-	col->linha = primeiraLinha;
-}
-
-/*
- * Converte e imprime os valores em graus fahrenheit
- */
 void converteFahrenheit (Coluna *col)
 {
-	Linha  *primeiraLinha = col->linha;
-	Coluna *primeiraColuna = col;
+	Coluna *tmp = col;
 	
 	while (col != NULL){
 		while (col->linha != NULL){
 			printf("%.2f\t", (col->linha->valor*1.8+32));
 			col->linha = col->linha->prox;
 		}
+
 		printf("\n");
 		col = col->prox;
 	}
 
-	col = primeiraColuna;
-	col->linha = primeiraLinha;
 }
 
 
@@ -168,29 +131,26 @@ int main (int argc, char *argv[])
 			
 			case 2:
 				headC = novaLinha (headC, headL);
+				headL = NULL;
 				
 				printf("Linha finalizada!\n");
 
 				break;
 			
 			case 0:
-				printf("Inserir as temperaturas em °C utilizando a opção 1, "
+				printf("Inserir as temperaturas em Â°C utilizando a opÃ§Ã£o 1, "
 				"assim que todos os valores de uma linha forem inseridos "
-				"utilizar a opção 2 para criá-la e iniciar uma nova linha com "
+				"utilizar a opÃ§Ã£o 2 para criÃ¡-la e iniciar uma nova linha com "
 				"novos valores."
-				"\nUtilizar a opção 3 para finalizar o programa e converter as unidades."
+				"\nUtilizar a opÃ§Ã£o 3 para finalizar o programa e converter as unidades."
 				"\nPressione qualquer outra tecla para terminar o programa.\n");
-
+			
 				break;
 
 			case 3:
-				printf("\nTemperaturas (°F): \n");
-				imprimeCelcius (headC);
-				printf("\n");
+				printf("\nTemperaturas (Â°F): \n");
 				converteFahrenheit (headC);
-				
-				system("pause");
-
+				system ("pause");
 			default: return 0;
 		}
 	}
