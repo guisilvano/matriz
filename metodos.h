@@ -1,6 +1,6 @@
 struct Linha
 {
-	float valor;								\
+	float valor;
 	struct Linha *prox;
 };
 
@@ -12,14 +12,8 @@ struct Coluna
 
 void insereLinha (Coluna *cabeca, float n)
 {
-	Coluna * coluna = cabeca;
+	Coluna *coluna = cabeca;
 	Linha *novaLinha = new Linha();
-	
-	// verifica se houve falha na alocação de memória
-	if (novaLinha == NULL){
-		printf ("\nFALHA AO ALOCAR MEMORIA");
-		exit (0);
-	}
 	
 	//insere valor
 	novaLinha->valor = n;
@@ -47,12 +41,6 @@ void insereColuna (Coluna *cabeca)
 	Coluna *novaColuna = new Coluna();
 	Coluna *coluna = cabeca;
 	
-	// verifica se houve falha na alocação de memória
-	if (novaColuna == NULL){
-		printf ("\nFALHA AO ALOCAR MEMORIA");
-		exit (0);
-	}
-	
 	novaColuna->linha = NULL;
 	novaColuna->prox = NULL;
 
@@ -70,7 +58,7 @@ void imprimeCelsius (Coluna *cabeca, int totalElementos)
 {
 	Coluna *coluna = cabeca;
 
-	while (coluna->prox != NULL){
+	while (coluna->linha != NULL){
 		Linha *linha = coluna->linha;
 		int elementos = 0;
 		
@@ -116,6 +104,7 @@ void converteFahrenheit (Coluna *cabeca, int totalElementos)
 	}
 }
 
+/*
 void liberarMemoria(Coluna *cabeca)
 {
 	Coluna *coluna,*colunaAnterior;
@@ -138,21 +127,4 @@ void liberarMemoria(Coluna *cabeca)
 	 	}
    }
 }
-
-void Listar(Coluna *cabeca)
-{ 
-	Coluna *coluna = cabeca;
-	
-	// enquanto coluna for diferente de nulo entra no while e calcula a variavel passando para fahrenheit
-	while (coluna != NULL){
-		Linha *linha = coluna->linha;
-		while (linha != NULL){
-			printf("-- %d - %f - %d | \n", linha, linha->valor, linha->prox);
-			linha = linha->prox;
-		}
-		//Pula para o proximo valor
-		printf("\n");
-		coluna = coluna->prox;
-	}
-}
-
+*/

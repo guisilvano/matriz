@@ -62,16 +62,8 @@ int main ()
 
 				break;
 				
-			/*
-			case 4:
-				printf("\nListar \n");
-				Listar(&coluna);
-				printf("\n");
-				break;
-				*/
-
 			default: 
-				liberarMemoria(&coluna);
+				//liberarMemoria (&coluna);
 				return 0;
 		}
 	}
