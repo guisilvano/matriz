@@ -1,7 +1,5 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<iostream>
-#include<fstream>
 #include "metodos.h"
 
 int main ()
@@ -23,6 +21,8 @@ int main ()
 		scanf("%d", &opt);
 		
 		switch (opt){
+			int elementos, maior;		//Número de elementos da atual e da maior linha
+			
 			case 0:
 				printf("Inserir as temperaturas em °C utilizando a opção 1, "
 				"assim que todos os valores de uma linha forem inseridos "
@@ -37,19 +37,29 @@ int main ()
 				printf("Informe o valor: ");
 				scanf("%f", &n);
 				insereLinha(&coluna, n);
+
+				elementos++;
+
 				break;
 			
 			case 2:
 				insereColuna (&coluna);
 				printf("Nova linha criada!\n");
+				
+				if (elementos > maior)
+					maior = elementos;
+
+				elementos = 0;
+
 				break;
 			
 			case 3:
 				printf("\nTemperaturas (°C): \n");
-				imprimeCelsius (&coluna);
+				imprimeCelsius (&coluna, maior);
 				printf("\n");
 				printf("\nTemperaturas (°F): \n");
-				converteFahrenheit (&coluna);
+				converteFahrenheit (&coluna, maior);
+
 				break;
 				
 			/*

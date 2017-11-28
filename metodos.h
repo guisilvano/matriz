@@ -66,31 +66,51 @@ void insereColuna (Coluna *cabeca)
    	}
 }
 
-void imprimeCelsius (Coluna *cabeca)
+void imprimeCelsius (Coluna *cabeca, int totalElementos)
 {
 	Coluna *coluna = cabeca;
 
-	while (coluna != NULL){
+	while (coluna->prox != NULL){
 		Linha *linha = coluna->linha;
+		int elementos = 0;
+		
 		while (linha != NULL){
 			printf("%.2f\t", linha->valor);
 			linha = linha->prox;
+
+			elementos++;
 		}
+
+		while (elementos < totalElementos){
+			printf("--\t");
+			elementos++;
+		}
+
 		printf("\n");
 		coluna = coluna->prox;
 	}
 }
 
-void converteFahrenheit (Coluna *cabeca)
+void converteFahrenheit (Coluna *cabeca, int totalElementos)
 {
 	Coluna *coluna = cabeca;
 
-	while (coluna != NULL){
+	while (coluna->prox != NULL){
 		Linha *linha = coluna->linha;
+		int elementos = 0;
+		
 		while (linha != NULL){
 			printf("%.2f\t", (linha->valor*1.8+32));
 			linha = linha->prox;
+
+			elementos++;
 		}
+
+		while (elementos < totalElementos){
+			printf("--\t");
+			elementos++;
+		}
+
 		printf("\n");
 		coluna = coluna->prox;
 	}
